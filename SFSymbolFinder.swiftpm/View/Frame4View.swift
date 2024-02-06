@@ -29,17 +29,19 @@ struct Frame4View: View {
                 }
                 Image(systemName: "bolt")
                     .font(.system(size: 200))
-                HStack(spacing: 50) {
+                HStack {
                     Button("thunder") {
                         showResult = true
                         isAnwerCorrect = false
                     }
                     .buttonStyle(OptionButtonStyle())
+                    Spacer()
                     Button("bolt") {
                         showResult = true
                         isAnwerCorrect = true
                     }
                     .buttonStyle(OptionButtonStyle())
+                    Spacer()
                     Button("lightning") {
                         showResult = true
                         isAnwerCorrect = false
@@ -69,32 +71,15 @@ struct Frame4View: View {
                     )
                     .overlay {
                         VStack(spacing: 20) {
-                            if #available(iOS 17.0, *) {
-                                Button {
-                                } label: {
-                                    Image(systemName: headlineIconName)
-                                        .foregroundStyle(.black)
-                                        .font(.system(size: 70))
-                                }
-                                .disabled(true)
-                                .symbolEffect(
-                                    .bounce.down, 
-                                    options: .repeating.speed(0.5),
-                                    value: isAnimationActive
-                                )        
-                                .onAppear {
-                                    isAnimationActive = true
-                                }
-                            } else {
-                                // Fallback on earlier versions
-                                Image(systemName: headlineIconName)
-                                    .foregroundStyle(.black)
-                                    .font(.system(size: 50))
-                            }
+                            Image(systemName: headlineIconName)
+                                .foregroundStyle(.black)
+                                .font(.system(size: 50))
                             Text(titleLabel)
                                 .font(.system(size: 25))
+                                .foregroundStyle(.black)
                             Text("Unfortunately, you won't find this symbol by searching for **'thunder'** or **'lightning.'**")
                                 .font(.system(size: 25))
+                                .foregroundStyle(.black)
                         }
                         .padding(.horizontal, 26)
                     }
@@ -108,7 +93,7 @@ struct Frame4View: View {
                 .label
                 .font(.title)
                 .foregroundStyle(Color.white)
-                .padding(.horizontal, 100)
+                .padding(.horizontal, 50)
                 .padding(.vertical, 50)
                 .background(
                     RoundedRectangle(cornerRadius: 16)
@@ -118,8 +103,4 @@ struct Frame4View: View {
                 )
         }
     }
-}
-
-#Preview {
-    Frame4View()
 }

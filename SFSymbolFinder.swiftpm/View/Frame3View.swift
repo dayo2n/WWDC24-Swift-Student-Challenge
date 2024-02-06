@@ -100,7 +100,3 @@ struct ExplanationBoxView: View {
         )
     }
 }
-
-#Preview {
-    Frame3View()
-}
