@@ -99,8 +99,10 @@ class SFSymbolClassifier {
 
     /// URL of model assuming it was installed in the same bundle as this class
     class var urlOfModelInThisBundle : URL {
-        let bundle = Bundle(for: self)
-        return bundle.url(forResource: "SFSymbolClassifier", withExtension:"mlmodelc")!
+//        let bundle = Bundle(for: self)
+//        return bundle.url(forResource: "SFSymbolClassifier", withExtension:"mlmodelc")!
+        let resourcePath = Bundle(for: self).url(forResource: "SFSymbolClassifier", withExtension: "mlmodel")!
+        return try! MLModel.compileModel(at: resourcePath)
     }
 
     /**

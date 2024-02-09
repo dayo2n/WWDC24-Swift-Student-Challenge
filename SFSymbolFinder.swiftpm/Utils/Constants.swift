@@ -21,4 +21,8 @@ struct Constants {
         "fleuron", "skew", "glowplug", "dpad", "megaphone",
         "pano", "viewfinder", "seal", "chevron.left.forwardslash.chevron.right", "suit.club"
     ]
+    
+    static let minPageRange = 1
+    static let maxPageRange = 6
+    static let pagesNotToShow = [4]
 }

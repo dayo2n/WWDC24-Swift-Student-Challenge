@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Frame4View: View {
-    
+    @Binding var selectedPageTag: Int    
     @State private var showResult = false
     @State private var isAnwerCorrect = false
     @State private var isAnimationActive = false
@@ -48,6 +48,8 @@ struct Frame4View: View {
                     }
                     .buttonStyle(OptionButtonStyle())
                 }
+                .padding(.horizontal, 50)
+                ButtonView(selectedPageTag: $selectedPageTag)
             }
             .padding(50)
             
@@ -98,7 +100,7 @@ struct Frame4View: View {
                 .background(
                     RoundedRectangle(cornerRadius: 16)
                         .fill(Color.primary500)
-                        .frame(width: 200, height: 116)
+                        .frame(width: 300, height: 116)
                         .shadow(radius: 4, y: 4)
                 )
         }

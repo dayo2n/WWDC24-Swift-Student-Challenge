@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Frame3View: View {
+    @Binding var selectedPageTag: Int
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -15,13 +16,16 @@ struct Frame3View: View {
                     VStack(alignment: .leading, spacing: 20) {
                         Text("SF Symbols")
                             .font(.system(size: 100))
+                            .foregroundColor(.white)
                         Divider()
                             .padding()
                         Text("SF Symbol is set of symbol images created by Apple that you can use as icons in yours app. How can I use it? Just one line of code.")
                             .font(.system(size: 30))
+                            .foregroundColor(.white)
                         CodeBlockView()
                         Text("Is it familiar? It's the code you see every time you create a new file in SwiftUI.\nIn SF Symbols, the symbols are intuitively named.")
                             .font(.system(size: 30))
+                            .foregroundColor(.white)
                     }
                     Spacer()
                 }
@@ -39,6 +43,7 @@ struct Frame3View: View {
                     systemName: "thermometer.sun",
                     explanation: "Now you can figure it out easily, right?\nThis symbol with a thermometer and sun together, read in order.\nThis symbol is \"thermometer.sun\"!"
                 )
+                ButtonView(selectedPageTag: $selectedPageTag)
             }
             .padding(50)
         }
@@ -88,9 +93,11 @@ struct ExplanationBoxView: View {
             Image(systemName: systemName)
                 .font(.system(size: 200))
                 .frame(width: 200)
+                .foregroundColor(.black)
             Spacer()
             Text(explanation)
                 .font(.system(size: 30))
+                .foregroundColor(.black)
             Spacer()
         }
         .padding(.vertical, 20)

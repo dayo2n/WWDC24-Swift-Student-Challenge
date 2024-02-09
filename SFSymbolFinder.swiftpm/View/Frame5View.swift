@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Frame5View: View {
-    
+    @Binding var selectedPageTag: Int    
     var body: some View {
         VStack {
             HStack {
@@ -27,7 +27,8 @@ struct Frame5View: View {
                     .font(.system(size: 30))
                 Spacer()
             }
+            ButtonView(selectedPageTag: $selectedPageTag)
         }
-        .padding()
+        .padding(50)
     }
 }
