@@ -13,9 +13,9 @@ struct Frame6View: View {
     @Binding var selectedPageTag: Int    
     @State private var isClear = false
     @Environment(\.displayScale) private var displayScale
-    @State private var results = ""
     @State private var canvasView: CanvasRepresentingView?
     @Environment(\.undoManager) var undoManager
+    @State private var results = [String: Int]()
     
     var body: some View {
         VStack {
@@ -52,6 +52,7 @@ struct Frame6View: View {
                             Button("SEARCH") {
                                 if let canvasView = canvasView {
                                     let uiImage = canvasView.getRenderedImage()
+#warning("강제언래핑 치워")
                                     predict(image: CIImage(image: uiImage)!)
                                 } else {
                                     print("no canvas")
@@ -64,18 +65,27 @@ struct Frame6View: View {
                 }
                 VStack {
                     Spacer()
-                    Text(results)
-                        .font(.footnote)
-                        .foregroundStyle(.white)
-                        .padding()
+                    ForEach(Array(results.keys), id: \.self) { label in
+                        Button {
+                            
+                        } label: {
+                            VStack {
+                                Text("\(label) \(results[label]!.description)%")
+                                    .font(.callout)
+                                    .foregroundStyle(.white)
+                                    .padding()
+                            }
+                        }
+                        .buttonStyle(BorderedButtonStyle())
+                    }
                     Spacer()
                 }
-                .border(Color.black)
+                .border(Color.primary500)
             }
             .frame(height: 450)
             .padding(20)
             .background(Color.primary100)
-
+            
             ButtonView(selectedPageTag: $selectedPageTag)
         }
         .padding(50)
@@ -101,12 +111,15 @@ struct Frame6View: View {
             // 머신러닝을 통한 결과값 프린트
             let sortedClassification = classification.sorted(by: { $0.confidence > $1.confidence })
             var count = 0
-            self.results = ""
+            self.results = [:]
             for result in sortedClassification {
+                print(result)
                 if count == 5 { break }
-                self.results += "\(result.identifier) \(result.confidence)\n"
+                let confidence = Int(result.confidence * 100)
+                self.results[result.identifier] = confidence
                 count += 1
             }
+            self.results = self.results.sorted(by: { $0.value > $1.value })
         }
         
         // 이미지를 받아와서 perform을 요청하여 분석한다. (Vision 프레임워크)
