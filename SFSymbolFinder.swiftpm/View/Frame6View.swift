@@ -10,12 +10,17 @@ import CoreML
 import Vision
 
 struct Frame6View: View {
-    @Binding var selectedPageTag: Int    
+    
+    struct Result: Hashable {
+        let label: String
+        let confidence: Int
+    }
+    @Binding var selectedPageTag: Int
     @State private var isClear = false
     @Environment(\.displayScale) private var displayScale
     @State private var canvasView: CanvasRepresentingView?
     @Environment(\.undoManager) var undoManager
-    @State private var results = [String: Int]()
+    @State private var results = [Result]()
     
     var body: some View {
         VStack {
@@ -52,7 +57,7 @@ struct Frame6View: View {
                             Button("SEARCH") {
                                 if let canvasView = canvasView {
                                     let uiImage = canvasView.getRenderedImage()
-#warning("강제언래핑 치워")
+                                    #warning("강제언래핑 치워")
                                     predict(image: CIImage(image: uiImage)!)
                                 } else {
                                     print("no canvas")
@@ -65,12 +70,12 @@ struct Frame6View: View {
                 }
                 VStack {
                     Spacer()
-                    ForEach(Array(results.keys), id: \.self) { label in
+                    ForEach(results, id: \.self) { result in
                         Button {
                             
                         } label: {
                             VStack {
-                                Text("\(label) \(results[label]!.description)%")
+                                Text("\(result.label) \(result.confidence)%")
                                     .font(.callout)
                                     .foregroundStyle(.white)
                                     .padding()
@@ -111,15 +116,18 @@ struct Frame6View: View {
             // 머신러닝을 통한 결과값 프린트
             let sortedClassification = classification.sorted(by: { $0.confidence > $1.confidence })
             var count = 0
-            self.results = [:]
+            self.results = []
             for result in sortedClassification {
                 print(result)
                 if count == 5 { break }
                 let confidence = Int(result.confidence * 100)
-                self.results[result.identifier] = confidence
+                self.results.append(Result(
+                    label: result.identifier,
+                    confidence: confidence
+                ))
                 count += 1
             }
-            self.results = self.results.sorted(by: { $0.value > $1.value })
+            self.results.sort(by: { $0.confidence > $1.confidence})
         }
         
         // 이미지를 받아와서 perform을 요청하여 분석한다. (Vision 프레임워크)
