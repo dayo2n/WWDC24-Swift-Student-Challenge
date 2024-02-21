@@ -20,6 +20,8 @@ struct Frame6View: View {
     @State private var canvasView: CanvasRepresentingView?
     @Environment(\.undoManager) var undoManager
     @State private var results = [Result]()
+    @State private var isNavigate = false
+    @State private var selectedLabel = ""
     
     var body: some View {
         VStack {
@@ -67,7 +69,7 @@ struct Frame6View: View {
                         }
                     }
                 }
-                NavigationStack {
+                NavigationView {
                     VStack {
                         Text("You can search with the keyword below\nPress the button to see if there's a symbol you're looking for")
                             .multilineTextAlignment(.center)
@@ -75,11 +77,17 @@ struct Frame6View: View {
                             .foregroundStyle(Color.primary100)
                             .padding()
                         Spacer()
+                        NavigationLink(
+                            destination: SFSymbolsView(keyword: selectedLabel)
+                                .navigationTitle(selectedLabel),
+                            isActive: $isNavigate,
+                            label: { EmptyView() }
+                        )
                         ForEach(results, id: \.self) { result in
-                            NavigationLink {
-                                SFSymbolsView(keyword: result.label)
-                                    .navigationTitle(result.label)
-                            } label: {
+                            Button {
+                                selectedLabel = result.label
+                                isNavigate = true
+                            } label : {
                                 VStack(spacing: 2) {
                                     Text("\(result.label)")
                                         .font(.callout)
@@ -93,12 +101,12 @@ struct Frame6View: View {
                             }
                             .padding(2)
                             .buttonStyle(BorderedButtonStyle())
-
                         }
                         Spacer()
                     }
                     .padding()
                 }
+                .navigationViewStyle(StackNavigationViewStyle())
                 .frame(width: 450)
             }
             .frame(height: 500)
@@ -161,6 +169,7 @@ struct SFSymbolsView: View {
         return Constants.sfsymbols.filter({ $0.contains(keyword)})
     }
     @State private var showClipboardAlert = false
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         ZStack {
             ScrollView {
@@ -177,7 +186,7 @@ struct SFSymbolsView: View {
                                     .foregroundStyle(.white)
                                     .frame(width: 80)
                                 Text(systemName)
-                                    .font(.subheadline    )
+                                    .font(.subheadline)
                                     .foregroundStyle(.white)
                                 Spacer()
                             }
@@ -191,6 +200,32 @@ struct SFSymbolsView: View {
                 }
                 .padding()
                 .padding(.top, 40)
+            }
+            VStack {
+                ZStack {
+                    HStack {
+                        Spacer()
+                        Text(keyword)
+                            .foregroundStyle(Color.accentColor)
+                            .font(.body)
+                        Spacer()
+                    }
+                    HStack {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.backward")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color.accentColor)
+                        }
+                        .padding()
+                        Spacer()
+                    }
+                }
+                .background(Color.black.opacity(0.3))
+                Spacer()
+                Spacer()
             }
             
             if showClipboardAlert {
@@ -212,11 +247,12 @@ struct SFSymbolsView: View {
                         .foregroundColor(.gray.opacity(0.5))
                 )
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                         showClipboardAlert = false
                     }
                 }
             }
         }
+        .navigationBarHidden(true)
     }
 }
