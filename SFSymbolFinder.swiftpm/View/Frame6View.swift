@@ -17,7 +17,6 @@ struct Frame6View: View {
     }
     @Binding var selectedPageTag: Int
     @State private var isClear = false
-    @Environment(\.displayScale) private var displayScale
     @State private var canvasView: CanvasRepresentingView?
     @Environment(\.undoManager) var undoManager
     @State private var results = [Result]()
@@ -72,7 +71,7 @@ struct Frame6View: View {
                     VStack {
                         Text("You can search with the keyword below\nPress the button to see if there's a symbol you're looking for")
                             .multilineTextAlignment(.center)
-                            .font(.subheadline)
+                            .font(.headline)
                             .foregroundStyle(Color.primary100)
                             .padding()
                         Spacer()
@@ -90,7 +89,7 @@ struct Frame6View: View {
                                         .font(.callout)
                                         .foregroundStyle(.white.opacity(0.8))
                                 }
-                                .frame(width: 250)
+                                .frame(width: 350)
                             }
                             .padding(2)
                             .buttonStyle(BorderedButtonStyle())
@@ -161,31 +160,63 @@ struct SFSymbolsView: View {
         let keyword = keyword.replacingOccurrences(of: "_", with: ".")
         return Constants.sfsymbols.filter({ $0.contains(keyword)})
     }
+    @State private var showClipboardAlert = false
     var body: some View {
-        ScrollView {
-            VStack {
-                Text("Click to copy the name to the clipboard")
-                    .font(.subheadline)
-                    .foregroundStyle(Color.primary100)
-                LazyVGrid(columns: Constants.column1) {
-                    ForEach(systemNames, id: \.self) { systemName in
-                        HStack(spacing: 10) {
-                            Image(systemName: systemName)
-                                .font(.largeTitle)
-                                .padding()
-                                .foregroundStyle(.white)
-                                .frame(width: 80)
-                            Text(systemName)
-                                .font(.title3)
-                                .foregroundStyle(.white)
-                            Spacer()
+        ZStack {
+            ScrollView {
+                VStack {
+                    Text("Click to copy the name to the clipboard")
+                        .font(.headline)
+                        .foregroundStyle(Color.primary100)
+                    LazyVGrid(columns: Constants.column1) {
+                        ForEach(systemNames, id: \.self) { systemName in
+                            HStack(spacing: 10) {
+                                Image(systemName: systemName)
+                                    .font(.largeTitle)
+                                    .padding()
+                                    .foregroundStyle(.white)
+                                    .frame(width: 80)
+                                Text(systemName)
+                                    .font(.subheadline    )
+                                    .foregroundStyle(.white)
+                                Spacer()
+                            }
+                            .border(Color.primary100, width: 0.5)
+                            .onTapGesture {
+                                UIPasteboard.general.string = systemName
+                                showClipboardAlert = true
+                            }
                         }
-                        .border(Color.primary100, width: 0.5)
+                    }
+                }
+                .padding()
+                .padding(.top, 40)
+            }
+            
+            if showClipboardAlert {
+                Color
+                    .black
+                    .opacity(0.7)
+                    .ignoresSafeArea()
+                HStack(spacing: 10) {
+                    Image(systemName: "doc.on.clipboard")
+                        .font(.title3)
+                        .foregroundStyle(.white)
+                    Text("Copied to clipboard")
+                        .font(.title3)
+                        .foregroundStyle(.white)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundColor(.gray.opacity(0.5))
+                )
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        showClipboardAlert = false
                     }
                 }
             }
-            .padding()
-            .padding(.top, 40)
         }
     }
 }
