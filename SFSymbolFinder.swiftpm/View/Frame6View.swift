@@ -30,7 +30,7 @@ struct Frame6View: View {
             HStack {
                 Text("So, I created it with our capable tool, CreateML.\nThere's no need to struggle to recall relevant keywords.\nFind confusing symbols by drawing.")
                     .font(.title)
-                LazyVGrid(columns: Constants.columns, spacing: 20) {
+                LazyVGrid(columns: Constants.columns5, spacing: 20) {
                     ForEach(Constants.symbols, id: \.self) { symbolName in
                         Image(systemName: symbolName)
                             .font(.system(size: 40))
@@ -40,7 +40,7 @@ struct Frame6View: View {
             Spacer()
                 .frame(height: 50)
             HStack {
-                Text("⚠️ Icons composed only of letters or numbers may not be searchable.")
+                Text("⚠️ Icons including letters or numbers may not be searchable.")
                 Spacer()
             }
             HStack(spacing: 30) {
@@ -68,26 +68,41 @@ struct Frame6View: View {
                         }
                     }
                 }
-                VStack {
-                    Spacer()
-                    ForEach(results, id: \.self) { result in
-                        Button {
-                            
-                        } label: {
-                            VStack {
-                                Text("\(result.label) \(result.confidence)%")
-                                    .font(.callout)
-                                    .foregroundStyle(.white)
-                                    .padding()
+                NavigationStack {
+                    VStack {
+                        Text("You can search with the keyword below\nPress the button to see if there's a symbol you're looking for")
+                            .multilineTextAlignment(.center)
+                            .font(.subheadline)
+                            .foregroundStyle(Color.primary100)
+                            .padding()
+                        Spacer()
+                        ForEach(results, id: \.self) { result in
+                            NavigationLink {
+                                SFSymbolsView(keyword: result.label)
+                                    .navigationTitle(result.label)
+                            } label: {
+                                VStack(spacing: 2) {
+                                    Text("\(result.label)")
+                                        .font(.callout)
+                                        .bold()
+                                        .foregroundStyle(.white)
+                                    Text("confidence **\(result.confidence)**%")
+                                        .font(.callout)
+                                        .foregroundStyle(.white.opacity(0.8))
+                                }
+                                .frame(width: 250)
                             }
+                            .padding(2)
+                            .buttonStyle(BorderedButtonStyle())
+
                         }
-                        .buttonStyle(BorderedButtonStyle())
+                        Spacer()
                     }
-                    Spacer()
+                    .padding()
                 }
-                .border(Color.primary500)
+                .frame(width: 450)
             }
-            .frame(height: 450)
+            .frame(height: 500)
             .padding(20)
             .background(Color.primary100)
             
@@ -136,6 +151,41 @@ struct Frame6View: View {
             try handler.perform([request])
         } catch {
             print(error)
+        }
+    }
+}
+
+struct SFSymbolsView: View {
+    let keyword: String
+    private var systemNames: [String] {
+        let keyword = keyword.replacingOccurrences(of: "_", with: ".")
+        return Constants.sfsymbols.filter({ $0.contains(keyword)})
+    }
+    var body: some View {
+        ScrollView {
+            VStack {
+                Text("Click to copy the name to the clipboard")
+                    .font(.subheadline)
+                    .foregroundStyle(Color.primary100)
+                LazyVGrid(columns: Constants.column1) {
+                    ForEach(systemNames, id: \.self) { systemName in
+                        HStack(spacing: 10) {
+                            Image(systemName: systemName)
+                                .font(.largeTitle)
+                                .padding()
+                                .foregroundStyle(.white)
+                                .frame(width: 80)
+                            Text(systemName)
+                                .font(.title3)
+                                .foregroundStyle(.white)
+                            Spacer()
+                        }
+                        .border(Color.primary100, width: 0.5)
+                    }
+                }
+            }
+            .padding()
+            .padding(.top, 40)
         }
     }
 }

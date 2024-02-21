@@ -16,7 +16,7 @@ struct Frame5View: View {
                     .font(.system(size: 40))
                 Spacer()
             }
-            LazyVGrid(columns: Constants.columns, spacing: 20) {
+            LazyVGrid(columns: Constants.columns5, spacing: 20) {
                 ForEach(Constants.symbols, id: \.self) { symbolName in
                     Image(systemName: symbolName)
                         .font(.system(size: 80))
