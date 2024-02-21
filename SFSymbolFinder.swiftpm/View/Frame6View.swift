@@ -22,102 +22,123 @@ struct Frame6View: View {
     @State private var results = [Result]()
     @State private var isNavigate = false
     @State private var selectedLabel = ""
+    @State private var showErrorAlert = false
     
     var body: some View {
-        VStack {
-            Button("") {
-                undoManager?.undo()
-            }.keyboardShortcut("z", modifiers: .command)
-            HStack {
-                Text("So, I created it with our capable tool, CreateML.\nThere's no need to struggle to recall relevant keywords.\nFind confusing symbols by drawing.")
-                    .font(.title)
-                LazyVGrid(columns: Constants.columns5, spacing: 20) {
-                    ForEach(Constants.symbols, id: \.self) { symbolName in
-                        Image(systemName: symbolName)
-                            .font(.system(size: 40))
+        ZStack {
+            VStack {
+                Button("") {
+                    undoManager?.undo()
+                }.keyboardShortcut("z", modifiers: .command)
+                HStack {
+                    Text("So, I created it with our capable tool, CreateML.\nThere's no need to struggle to recall relevant keywords.\nFind confusing symbols by drawing.")
+                        .font(.title)
+                    LazyVGrid(columns: Constants.columns5, spacing: 20) {
+                        ForEach(Constants.symbols, id: \.self) { symbolName in
+                            Image(systemName: symbolName)
+                                .font(.system(size: 40))
+                        }
                     }
                 }
-            }
-            Spacer()
-                .frame(height: 50)
-            HStack {
-                Text("⚠️ Icons including letters or numbers may not be searchable.")
                 Spacer()
-            }
-            HStack(spacing: 30) {
-                ZStack {
-                    canvasView
-                    HStack {
-                        Spacer()
-                        VStack {
+                    .frame(height: 50)
+                HStack {
+                    Text("⚠️ Icons including letters or numbers may not be searchable.")
+                    Spacer()
+                }
+                HStack(spacing: 30) {
+                    ZStack {
+                        canvasView
+                        HStack {
                             Spacer()
-                            Button("CLEAR") {
-                                isClear.toggle()
-                            }
-                            .buttonStyle(BorderedButtonStyle())
-                            Button("SEARCH") {
-                                if let canvasView = canvasView {
-                                    let uiImage = canvasView.getRenderedImage()
-                                    #warning("강제언래핑 치워")
-                                    predict(image: CIImage(image: uiImage)!)
-                                } else {
-                                    print("no canvas")
+                            VStack {
+                                Spacer()
+                                Button("CLEAR") {
+                                    isClear.toggle()
                                 }
+                                .buttonStyle(BorderedButtonStyle())
+                                Button("SEARCH") {
+                                    if let canvasView = canvasView {
+                                        let uiImage = canvasView.getRenderedImage()
+                                        if let ciImage = CIImage(image: uiImage) {
+                                            predict(image: ciImage)
+                                        } else {
+                                            self.showErrorAlert = true
+                                        }
+                                    } else {
+                                        self.showErrorAlert = true
+                                    }
+                                }
+                                .buttonStyle(BorderedProminentButtonStyle())
+                                .padding([.bottom, .trailing])
                             }
-                            .buttonStyle(BorderedProminentButtonStyle())
-                            .padding([.bottom, .trailing])
                         }
                     }
-                }
-                NavigationView {
-                    VStack {
-                        Text("You can search with the keyword below\nPress the button to see if there's a symbol you're looking for")
-                            .multilineTextAlignment(.center)
-                            .font(.headline)
-                            .foregroundStyle(Color.primary100)
-                            .padding()
-                        Spacer()
-                        NavigationLink(
-                            destination: SFSymbolsView(keyword: selectedLabel)
-                                .navigationTitle(selectedLabel),
-                            isActive: $isNavigate,
-                            label: { EmptyView() }
-                        )
-                        ForEach(results, id: \.self) { result in
-                            Button {
-                                selectedLabel = result.label
-                                isNavigate = true
-                            } label : {
-                                VStack(spacing: 2) {
-                                    Text("\(result.label)")
-                                        .font(.callout)
-                                        .bold()
-                                        .foregroundStyle(.white)
-                                    Text("confidence **\(result.confidence)**%")
-                                        .font(.callout)
-                                        .foregroundStyle(.white.opacity(0.8))
+                    NavigationView {
+                        VStack {
+                            Text("You can search with the keyword below\nPress the button to see if there's a symbol you're looking for")
+                                .multilineTextAlignment(.center)
+                                .font(.headline)
+                                .foregroundStyle(Color.primary100)
+                                .padding()
+                            Spacer()
+                            NavigationLink(
+                                destination: SFSymbolsView(keyword: selectedLabel)
+                                    .navigationTitle(selectedLabel),
+                                isActive: $isNavigate,
+                                label: { EmptyView() }
+                            )
+                            ForEach(results, id: \.self) { result in
+                                Button {
+                                    selectedLabel = result.label
+                                    isNavigate = true
+                                } label : {
+                                    VStack(spacing: 2) {
+                                        Text("\(result.label)")
+                                            .font(.callout)
+                                            .bold()
+                                            .foregroundStyle(.white)
+                                        Text("confidence **\(result.confidence)**%")
+                                            .font(.callout)
+                                            .foregroundStyle(.white.opacity(0.8))
+                                    }
+                                    .frame(width: 350)
                                 }
-                                .frame(width: 350)
+                                .padding(2)
+                                .buttonStyle(BorderedButtonStyle())
                             }
-                            .padding(2)
-                            .buttonStyle(BorderedButtonStyle())
+                            Spacer()
                         }
-                        Spacer()
+                        .padding()
                     }
-                    .padding()
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .frame(width: 450)
                 }
-                .navigationViewStyle(StackNavigationViewStyle())
-                .frame(width: 450)
+                .frame(height: 500)
+                .padding(20)
+                .background(Color.primary100)
+                
+                ButtonView(selectedPageTag: $selectedPageTag)
             }
-            .frame(height: 500)
-            .padding(20)
-            .background(Color.primary100)
+            .padding(50)
+            .onAppear {
+                canvasView = CanvasRepresentingView(isClear: $isClear)
+            }
             
-            ButtonView(selectedPageTag: $selectedPageTag)
-        }
-        .padding(50)
-        .onAppear {
-            canvasView = CanvasRepresentingView(isClear: $isClear)
+            if showErrorAlert {
+                Color.black
+                    .opacity(0.8)
+                
+                Text("An error occured.\nPlease run the app again.")
+                    .font(.title)
+                    .bold()
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.white)
+                    .background (
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(.black)
+                    )
+            }
         }
     }
     
