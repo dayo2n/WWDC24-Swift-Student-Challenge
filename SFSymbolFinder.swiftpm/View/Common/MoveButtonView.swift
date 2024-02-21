@@ -19,16 +19,27 @@ struct ButtonView: View {
 }
 struct MoveButtonView: View {
     let label: String
+    let isPrevButton: Bool
     var body: some View {
-        Text(label)
-            .foregroundStyle(.white)
-            .font(.system(size: 30, weight: .semibold))
-            .padding(.horizontal, 50)
-            .padding(.vertical, 30)
-            .background(
-                RoundedRectangle(cornerRadius: 15)
-                    .foregroundStyle(Color.primary500)
-            )
+        HStack {
+            if isPrevButton {
+                Image(systemName: "chevron.backward")
+                    .font(.title)
+                    .foregroundStyle(Color.primary300)
+                    .bold()
+            }
+            Text(label)
+                .foregroundStyle(Color.primary300)
+                .font(.title)
+                .bold()
+            if !isPrevButton {
+                Image(systemName: "chevron.forward")
+                    .font(.title)
+                    .foregroundStyle(Color.primary300)
+                    .bold()
+            }
+        }
+        .padding(.vertical)
     }
 }
 
@@ -36,13 +47,15 @@ struct MoveNextButtonView: View {
     @Binding var selectedPageNumber: Int
     var body: some View {
         Button {
-            if selectedPageNumber == Constants.maxPageRange {
-                selectedPageNumber = Constants.minPageRange
-                return
+            withAnimation(.easeIn) {
+                if selectedPageNumber == Constants.maxPageRange {
+                    selectedPageNumber = Constants.minPageRange
+                    return
+                }
+                selectedPageNumber += 1
             }
-            selectedPageNumber += 1
         } label: {
-            MoveButtonView(label: "NEXT")
+            MoveButtonView(label: "NEXT", isPrevButton: false)
         }
     }
 }
@@ -51,13 +64,15 @@ struct MovePrevButtonView: View {
     @Binding var selectedPageNumber: Int
     var body: some View {
         Button {
-            if selectedPageNumber == Constants.minPageRange {
-                selectedPageNumber = Constants.maxPageRange
-                return
+            withAnimation(.easeOut) {
+                if selectedPageNumber == Constants.minPageRange {
+                    selectedPageNumber = Constants.maxPageRange
+                    return
+                }
+                selectedPageNumber -= 1
             }
-            selectedPageNumber -= 1
         } label: {
-            MoveButtonView(label: "PREV")
+            MoveButtonView(label: "PREV", isPrevButton: true)
         }
     }
 }

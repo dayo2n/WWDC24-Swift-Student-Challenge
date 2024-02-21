@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedPage = 6
+    @State private var selectedPage = 4
     var body: some View {
         TabView(selection: $selectedPage){
             Frame1View(selectedPageTag: $selectedPage)

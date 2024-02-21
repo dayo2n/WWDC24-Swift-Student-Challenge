@@ -15,16 +15,16 @@ struct Frame3View: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 20) {
                         Text("SF Symbols")
-                            .font(.system(size: 100))
+                            .font(.system(size: 30))
                             .foregroundColor(.white)
                         Divider()
                             .padding()
                         Text("SF Symbol is set of symbol images created by Apple that you can use as icons in yours app. How can I use it? Just one line of code.")
-                            .font(.system(size: 30))
+                            .font(.system(size: 20))
                             .foregroundColor(.white)
                         CodeBlockView()
                         Text("Is it familiar? It's the code you see every time you create a new file in SwiftUI.\nIn SF Symbols, the symbols are intuitively named.")
-                            .font(.system(size: 30))
+                            .font(.system(size: 20))
                             .foregroundColor(.white)
                     }
                     Spacer()
@@ -37,7 +37,7 @@ struct Frame3View: View {
                 )
                 ExplanationBoxView(
                     systemName: "gear",
-                    explanation: "Then why didn't it show up when you searched for 'setting' earlier? Actually, if you had entered 'settings,' you could have found it. It's just a mishap caused by unfamiliarity with English expressions.\nAs for this symbol, it's called 'gear,' just like its appearance."
+                    explanation: "Then why didn't it show up when I searched for 'setting' earlier?\nActually, if I had entered 'settings,' I could have found it. It's just a mishap caused by unfamiliarity with English expressions.\nAs for this symbol, it's called 'gear,' just like its appearance."
                 )
                 ExplanationBoxView(
                     systemName: "thermometer.sun",
@@ -68,8 +68,8 @@ struct CodeBlockView: View {
                     .foregroundStyle(Color(hex: 0x191919).opacity(0.6))
             )
             Text("Image(systemName: “globe”)")
-                .font(.custom("Menlo-Regular", size: 40))
-                .padding(.vertical, 50)
+                .font(.custom("Menlo-Regular", size: 20))
+                .padding(.vertical, 30)
                 .padding(.leading, 30)
                 .foregroundStyle(Color.white)
         }
@@ -79,7 +79,7 @@ struct CodeBlockView: View {
     
     func windowButton(_ color: Color) -> some View {
         Circle()
-            .frame(width: 20)
+            .frame(width: 15)
             .foregroundStyle(color)
     }
 }
@@ -91,12 +91,12 @@ struct ExplanationBoxView: View {
         HStack(spacing: 30) {
             Spacer()
             Image(systemName: systemName)
-                .font(.system(size: 200))
-                .frame(width: 200)
+                .font(.system(size: 80))
+                .frame(width: 80)
                 .foregroundColor(.black)
             Spacer()
             Text(explanation)
-                .font(.system(size: 30))
+                .font(.system(size: 20))
                 .foregroundColor(.black)
             Spacer()
         }

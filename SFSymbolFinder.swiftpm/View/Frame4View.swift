@@ -18,6 +18,9 @@ struct Frame4View: View {
     private var titleLabel: String {
         isAnwerCorrect ? "It's amazing, that's the correct answer!" : "It was close! The correct answer is 'bolt.'"
     }
+    private var captionLabel: String {
+        isAnwerCorrect ? " to move on next page." : " to choose the answer again!"
+    }
     
     var body: some View {
         ZStack {
@@ -49,42 +52,58 @@ struct Frame4View: View {
                     .buttonStyle(OptionButtonStyle())
                 }
                 .padding(.horizontal, 50)
-                ButtonView(selectedPageTag: $selectedPageTag)
+                HStack {
+                    MovePrevButtonView(selectedPageNumber: $selectedPageTag)
+                    Spacer()
+                }
             }
             .padding(50)
             
             if showResult {
-                Color.black
-                    .opacity(0.8)
-                    .ignoresSafeArea()
-                RoundedRectangle(cornerRadius: 16)
-                    .frame(width: 593, height: 331)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [
-                                .primary50,
-                                .primary100,
-                                .primary300,
-                                .primary500
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+                Group {
+                    Color.black
+                        .opacity(0.8)
+                        .ignoresSafeArea()
+                    RoundedRectangle(cornerRadius: 16)
+                        .frame(width: 593, height: 331)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [
+                                    .primary50,
+                                    .primary100,
+                                    .primary300,
+                                    .primary500
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
                         )
-                    )
-                    .overlay {
-                        VStack(spacing: 20) {
-                            Image(systemName: headlineIconName)
-                                .foregroundStyle(.black)
-                                .font(.system(size: 50))
-                            Text(titleLabel)
-                                .font(.system(size: 25))
-                                .foregroundStyle(.black)
-                            Text("Unfortunately, you won't find this symbol by searching for **'thunder'** or **'lightning.'**")
-                                .font(.system(size: 25))
-                                .foregroundStyle(.black)
+                        .overlay {
+                            VStack(spacing: 20) {
+                                Image(systemName: headlineIconName)
+                                    .foregroundStyle(.black)
+                                    .font(.system(size: 50))
+                                Text(titleLabel)
+                                    .font(.system(size: 25))
+                                    .foregroundStyle(.black)
+                                Text("Unfortunately, you won't find this symbol by searching for **'thunder'** or **'lightning.'**")
+                                    .font(.system(size: 25))
+                                    .foregroundStyle(.black)
+                                Text("**Click**\(captionLabel)")
+                                    .font(.system(size: 20))
+                                    .foregroundStyle(.black)
+                            }
+                            .padding(.horizontal, 26)
                         }
-                        .padding(.horizontal, 26)
+                }
+                .onTapGesture {
+                    showResult = false
+                    if isAnwerCorrect {
+                        withAnimation(.easeIn) {
+                            selectedPageTag += 1
+                        }
                     }
+                }
             }
         }
     }
