@@ -26,12 +26,14 @@ struct Frame4View: View {
         ZStack {
             VStack(spacing: 50) {
                 HStack {
-                    Text("I'll give you a quiz, would you like to try and solve it?\nTry to guess the name of the symbol below among the three options.")
+                    Text("I'll give you a quiz. Would you like to try and solve it?\nTry to guess the name of the symbol below among the three options.")
                         .font(.system(size: 30))
+                        .foregroundStyle(.white)
                     Spacer()
                 }
                 Image(systemName: "bolt")
                     .font(.system(size: 100))
+                    .foregroundStyle(.white)
                 HStack {
                     Button("thunder") {
                         showResult = true
@@ -83,6 +85,7 @@ struct Frame4View: View {
                                 Image(systemName: headlineIconName)
                                     .foregroundStyle(.black)
                                     .font(.system(size: 50))
+                                
                                 Text(titleLabel)
                                     .font(.system(size: 25))
                                     .foregroundStyle(.black)

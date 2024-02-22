@@ -19,7 +19,7 @@ struct Frame3View: View {
                             .foregroundColor(.white)
                         Divider()
                             .padding()
-                        Text("SF Symbol is set of symbol images created by Apple that you can use as icons in yours app. How can I use it? Just one line of code.")
+                        Text("SF Symbol is set of symbol images created by Apple that you can use as icons in yours app. \nIt is simple to use. **Just one line of code.**")
                             .font(.system(size: 20))
                             .foregroundColor(.white)
                         CodeBlockView()
@@ -33,15 +33,15 @@ struct Frame3View: View {
                     .padding()
                 ExplanationBoxView(
                     systemName: "square.and.arrow.up",
-                    explanation: "A square with an arrow pointing upwards. In that case, the name of this symbol is \"square.and.arrow.up\".\n It is commonly used in apps to represent the concept of sharing, and you may also search for it as \"share\"."
+                    explanation: "A square with an arrow pointing upwards. In this case, the name of this symbol is \"square.and.arrow.up\". It is commonly used in apps to represent the concept of sharing, and you may also search for it as \"share\"."
                 )
                 ExplanationBoxView(
                     systemName: "gear",
-                    explanation: "Then why didn't it show up when I searched for 'setting' earlier?\nActually, if I had entered 'settings,' I could have found it. It's just a mishap caused by unfamiliarity with English expressions.\nAs for this symbol, it's called 'gear,' just like its appearance."
+                    explanation: "Then why didn't it show up when I searched for 'setting' earlier?\nActually, if I had entered 'settings,' I could have found it. It's just a mishap caused by unfamiliarity with English expressions. As for this symbol, it's called 'gear,' just like its appearance."
                 )
                 ExplanationBoxView(
                     systemName: "thermometer.sun",
-                    explanation: "Now you can figure it out easily, right?\nThis symbol with a thermometer and sun together, just read in order.\nThis symbol is \"thermometer.sun\"!"
+                    explanation: "Now you can figure it out easily, right? This symbol with a thermometer and sun together, just read in order. \nThis symbol is \"thermometer.sun\"!"
                 )
                 ButtonView(selectedPageTag: $selectedPageTag)
             }

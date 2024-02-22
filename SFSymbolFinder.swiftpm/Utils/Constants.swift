@@ -8,6 +8,24 @@
 import SwiftUI
 
 struct Constants {
+    static let frameWidth = CGFloat(500)
+    static let frameHeight = CGFloat(400)
+    
+    /* Images */
+    static let frame1_1 = "frame1_1"
+    static let frame1_2 = "frame1_2"
+    static let frame1_3 = "frame1_3"
+    static let frame1_4 = "frame1_4"
+    static let frame1_5 = "frame1_5"
+    static let frame1_6 = "frame1_6"
+    static let frame1_7 = "frame1_7"
+    
+    static let frame2_1 = "frame2_1"
+    static let frame2_2 = "frame2_2"
+    static let frame2_3 = "frame2_3"
+    static let frame2_4 = "frame2_4"
+    static let frame2_5 = "frame2_5"
+    
     static let column1 = [
         GridItem()
     ]

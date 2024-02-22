@@ -12,10 +12,12 @@ struct CanvasRepresentingView: UIViewRepresentable {
     
     @Binding var isClear: Bool
     let canvas = PKCanvasView()
+    @Environment(\.colorScheme) private var colorScheme
     
     func makeUIView(context: Context) -> PKCanvasView {
         canvas.backgroundColor = UIColor(Color.neutral)
-        canvas.tool = PKInkingTool(.pencil, color: .black, width: 20)
+        let isDark = colorScheme == .dark
+        canvas.tool = PKInkingTool(.pencil, color: isDark ? .black : .white, width: 20)
         return canvas
     }
 

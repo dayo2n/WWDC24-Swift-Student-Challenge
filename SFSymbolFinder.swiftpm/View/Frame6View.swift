@@ -31,19 +31,22 @@ struct Frame6View: View {
                     undoManager?.undo()
                 }.keyboardShortcut("z", modifiers: .command)
                 HStack {
-                    Text("So, I created it with our capable tool, CreateML.\nThere's no need to struggle to recall relevant keywords.\nFind confusing symbols by drawing.")
+                    Text("So, I made this with CreatML in the hope that I can solve these problems and they could focus more on their work.")
                         .font(.title)
+                        .foregroundStyle(.white)
                     LazyVGrid(columns: Constants.columns5, spacing: 20) {
                         ForEach(Constants.symbols, id: \.self) { symbolName in
                             Image(systemName: symbolName)
                                 .font(.system(size: 40))
+                                .foregroundStyle(.white)
                         }
                     }
                 }
                 Spacer()
                     .frame(height: 50)
                 HStack {
-                    Text("⚠️ Icons including letters or numbers, figures may not be searchable.")
+                    Text("⚠️ Icons including letters, numbers or figures may not be searchable.")
+                        .foregroundStyle(.white)
                     Spacer()
                 }
                 HStack(spacing: 30) {
@@ -75,41 +78,46 @@ struct Frame6View: View {
                         }
                     }
                     NavigationView {
-                        VStack {
-                            Text("You can search with the keyword below\nPress the button to see if there's a symbol you're looking for")
-                                .multilineTextAlignment(.center)
-                                .font(.headline)
-                                .foregroundStyle(Color.primary100)
-                                .padding()
-                            Spacer()
-                            NavigationLink(
-                                destination: SFSymbolsView(keyword: selectedLabel)
-                                    .navigationTitle(selectedLabel),
-                                isActive: $isNavigate,
-                                label: { EmptyView() }
-                            )
-                            ForEach(results, id: \.self) { result in
-                                Button {
-                                    selectedLabel = result.label
-                                    isNavigate = true
-                                } label : {
-                                    VStack(spacing: 2) {
-                                        Text("\(result.label)")
-                                            .font(.callout)
-                                            .bold()
-                                            .foregroundStyle(.white)
-                                        Text("confidence **\(result.confidence)**%")
-                                            .font(.callout)
-                                            .foregroundStyle(.white.opacity(0.8))
+                        ZStack {
+                            Color.neutral
+                            VStack {
+                                Text("You can search with the keyword below\nPress the button to see if there's a symbol you're looking for")
+                                    .multilineTextAlignment(.center)
+                                    .font(.headline)
+                                    .foregroundStyle(Color.primary100)
+                                    .padding()
+                                Spacer()
+                                NavigationLink(
+                                    destination: SFSymbolsView(keyword: selectedLabel)
+                                        .navigationTitle(selectedLabel),
+                                    isActive: $isNavigate,
+                                    label: { EmptyView() }
+                                )
+                                ForEach(results, id: \.self) { result in
+                                    Button {
+                                        selectedLabel = result.label
+                                        isNavigate = true
+                                    } label : {
+                                        VStack(spacing: 2) {
+                                            let label = result.label.replacingOccurrences(of: "_", with: ".")
+                                            Text("\(label)")
+                                                .font(.callout)
+                                                .bold()
+                                                .foregroundStyle(.white)
+                                            Text("confidence **\(result.confidence)**%")
+                                                .font(.callout)
+                                                .foregroundStyle(.white.opacity(0.8))
+                                        }
+                                        .frame(width: 350)
                                     }
-                                    .frame(width: 350)
+                                    .padding(2)
+                                    .buttonStyle(BorderedButtonStyle())
                                 }
-                                .padding(2)
-                                .buttonStyle(BorderedButtonStyle())
+                                Spacer()
                             }
-                            Spacer()
+                            .padding()
+                            .background(Color.neutral)
                         }
-                        .padding()
                     }
                     .navigationViewStyle(StackNavigationViewStyle())
                     .frame(width: 450)
@@ -198,6 +206,7 @@ struct SFSymbolsView: View {
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         ZStack {
+            Color.neutral
             ScrollView {
                 VStack {
                     Text("Click to copy the name to the clipboard")
