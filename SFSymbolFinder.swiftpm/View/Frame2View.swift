@@ -72,7 +72,6 @@ struct Frame2View: View {
                                         .frame(width: Constants.frameWidth * 0.6)
                                 }
                             }
-                            .onAppear(perform: showingNextCutAfter3Seconds)
                         }
                         
                         VStack {
@@ -91,6 +90,7 @@ struct Frame2View: View {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                     withAnimation(.easeIn) {
                                         showingClaire = true
+                                        showingNextCutAfter3Seconds()
                                     }
                                 }
                             }

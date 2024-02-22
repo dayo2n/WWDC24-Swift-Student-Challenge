@@ -23,6 +23,7 @@ struct Frame6View: View {
     @State private var isNavigate = false
     @State private var selectedLabel = ""
     @State private var showErrorAlert = false
+    @State private var onAppeared = false
     
     var body: some View {
         ZStack {
@@ -77,6 +78,7 @@ struct Frame6View: View {
                             }
                         }
                     }
+                    .frame(width: 700)
                     NavigationView {
                         ZStack {
                             Color.neutral
@@ -130,7 +132,10 @@ struct Frame6View: View {
             }
             .padding(50)
             .onAppear {
-                canvasView = CanvasRepresentingView(isClear: $isClear)
+                if !onAppeared {
+                    canvasView = CanvasRepresentingView(isClear: $isClear)
+                    onAppeared = true
+                }
             }
             
             if showErrorAlert {
@@ -174,12 +179,13 @@ struct Frame6View: View {
             var count = 0
             self.results = []
             for result in sortedClassification {
+                print(canvasView!.canvas.drawing)
                 print(result)
                 if count == 5 { break }
                 let confidence = Int(result.confidence * 100)
                 self.results.append(Result(
                     label: result.identifier,
-                    confidence: confidence == 0 ? 1 : confidence
+                    confidence: confidence
                 ))
                 count += 1
             }
