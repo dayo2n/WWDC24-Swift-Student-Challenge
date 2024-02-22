@@ -43,7 +43,7 @@ struct Frame6View: View {
                 Spacer()
                     .frame(height: 50)
                 HStack {
-                    Text("⚠️ Icons including letters or numbers may not be searchable.")
+                    Text("⚠️ Icons including letters or numbers, figures may not be searchable.")
                     Spacer()
                 }
                 HStack(spacing: 30) {
