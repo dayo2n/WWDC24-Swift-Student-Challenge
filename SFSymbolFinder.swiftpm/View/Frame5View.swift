@@ -10,7 +10,7 @@ import SwiftUI
 struct Frame5View: View {
     @Binding var selectedPageTag: Int    
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             HStack {
                 Text("Do you know the names of everything here as well?")
                     .font(.system(size: 30))
@@ -24,8 +24,8 @@ struct Frame5View: View {
                 }
             }
             HStack {
-                Text("There must have been things that didn't come to mind right away. Even if the names are intuitive, symbols with unfamiliar appearances are difficult to identify by name alone.Many designers and developers from various countries have faced challenges more than expected.\n\n**The task at hand should not be 'guessing the names of symbols,' but it's something else that requires focus.**")
-                    .font(.system(size: 20))
+                Text("There must have been things that didn't come to mind right away.\n\nEven if the names are intuitive, symbols with unfamiliar appearances are difficult to identify by name alone.\n\nMany designers and developers from various countries have faced challenges more than expected.\n\n**The task at hand should not be 'guessing the names of symbols,' but it's something else that requires focus.**")
+                    .font(.system(size: 22))
                 Spacer()
             }
             ButtonView(selectedPageTag: $selectedPageTag)

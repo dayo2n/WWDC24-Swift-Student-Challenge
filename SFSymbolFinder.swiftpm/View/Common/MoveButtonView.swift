@@ -5,14 +5,12 @@ struct ButtonView: View {
     @Binding var selectedPageTag: Int
     var body: some View {
         HStack {
-            if !Constants.pagesNotToShow.contains(selectedPageTag) {
-                if selectedPageTag > Constants.minPageRange {
-                    MovePrevButtonView(selectedPageNumber: $selectedPageTag)
-                }
-                Spacer()
-                if selectedPageTag < Constants.maxPageRange {
-                    MoveNextButtonView(selectedPageNumber: $selectedPageTag) 
-                }
+            if selectedPageTag > Constants.minPageRange {
+                MovePrevButtonView(selectedPageNumber: $selectedPageTag)
+            }
+            Spacer()
+            if selectedPageTag < Constants.maxPageRange {
+                MoveNextButtonView(selectedPageNumber: $selectedPageTag) 
             }
         }
     }

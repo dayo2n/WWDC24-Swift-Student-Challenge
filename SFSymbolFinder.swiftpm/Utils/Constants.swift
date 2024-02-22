@@ -33,8 +33,7 @@ struct Constants {
     ]
     
     static let minPageRange = 1
-    static let maxPageRange = 6
-    static let pagesNotToShow = [4]
+    static let maxPageRange = 7
     
     static let sfsymbols = [
         "clock.badge.questionmark.fill",

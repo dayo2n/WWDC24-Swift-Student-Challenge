@@ -128,16 +128,21 @@ struct Frame6View: View {
             if showErrorAlert {
                 Color.black
                     .opacity(0.8)
-                
-                Text("An error occured.\nPlease run the app again.")
-                    .font(.title)
-                    .bold()
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.white)
-                    .background (
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(.black)
-                    )
+                VStack(spacing: 10) {
+                    Image(systemName: "exclamationmark.warninglight.fill")
+                        .font(.title)
+                        .foregroundStyle(.white)
+                    Text("An error occured.\nPlease run the app again.")
+                        .font(.title2)
+                        .bold()
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.white)
+                }
+                .padding(30)
+                .background (
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundStyle(.gray)
+                )
             }
         }
     }
@@ -166,7 +171,7 @@ struct Frame6View: View {
                 let confidence = Int(result.confidence * 100)
                 self.results.append(Result(
                     label: result.identifier,
-                    confidence: confidence
+                    confidence: confidence == 0 ? 1 : confidence
                 ))
                 count += 1
             }
@@ -200,18 +205,22 @@ struct SFSymbolsView: View {
                         .foregroundStyle(Color.primary100)
                     LazyVGrid(columns: Constants.column1) {
                         ForEach(systemNames, id: \.self) { systemName in
-                            HStack(spacing: 10) {
-                                Image(systemName: systemName)
-                                    .font(.largeTitle)
-                                    .padding()
-                                    .foregroundStyle(.white)
-                                    .frame(width: 80)
-                                Text(systemName)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.white)
-                                Spacer()
+                            ZStack {
+                                Rectangle()
+                                    .stroke(Color.primary100, lineWidth: 0.5)
+                                    .background(Color.neutral)
+                                HStack(spacing: 10) {
+                                    Image(systemName: systemName)
+                                        .font(.largeTitle)
+                                        .padding()
+                                        .foregroundStyle(.white)
+                                        .frame(width: 80)
+                                    Text(systemName)
+                                        .font(.subheadline)
+                                        .foregroundStyle(.white)
+                                    Spacer()
+                                }
                             }
-                            .border(Color.primary100, width: 0.5)
                             .onTapGesture {
                                 UIPasteboard.general.string = systemName
                                 showClipboardAlert = true

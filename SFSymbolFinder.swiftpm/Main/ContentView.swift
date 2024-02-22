@@ -16,6 +16,8 @@ struct ContentView: View {
                 .tag(5)
             Frame6View(selectedPageTag: $selectedPage)
                 .tag(6)
+            Frame7View(selectedPageTag: $selectedPage)
+                .tag(7)
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
     }

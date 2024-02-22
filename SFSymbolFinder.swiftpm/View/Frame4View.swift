@@ -31,7 +31,7 @@ struct Frame4View: View {
                     Spacer()
                 }
                 Image(systemName: "bolt")
-                    .font(.system(size: 200))
+                    .font(.system(size: 100))
                 HStack {
                     Button("thunder") {
                         showResult = true
@@ -119,7 +119,7 @@ struct Frame4View: View {
                 .background(
                     RoundedRectangle(cornerRadius: 16)
                         .fill(Color.primary500)
-                        .frame(width: 300, height: 116)
+                        .frame(width: 200, height: 96)
                         .shadow(radius: 4, y: 4)
                 )
         }

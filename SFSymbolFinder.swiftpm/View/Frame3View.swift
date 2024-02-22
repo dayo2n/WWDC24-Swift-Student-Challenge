@@ -33,7 +33,7 @@ struct Frame3View: View {
                     .padding()
                 ExplanationBoxView(
                     systemName: "square.and.arrow.up",
-                    explanation: "A square with an arrow pointing upwards, correct? In that case, the name of this symbol is \"square.and.arrow.up\".\n It is commonly used in apps to represent the concept of sharing, and you may also search for it as \"share\"."
+                    explanation: "A square with an arrow pointing upwards. In that case, the name of this symbol is \"square.and.arrow.up\".\n It is commonly used in apps to represent the concept of sharing, and you may also search for it as \"share\"."
                 )
                 ExplanationBoxView(
                     systemName: "gear",
@@ -41,7 +41,7 @@ struct Frame3View: View {
                 )
                 ExplanationBoxView(
                     systemName: "thermometer.sun",
-                    explanation: "Now you can figure it out easily, right?\nThis symbol with a thermometer and sun together, read in order.\nThis symbol is \"thermometer.sun\"!"
+                    explanation: "Now you can figure it out easily, right?\nThis symbol with a thermometer and sun together, just read in order.\nThis symbol is \"thermometer.sun\"!"
                 )
                 ButtonView(selectedPageTag: $selectedPageTag)
             }
@@ -65,7 +65,8 @@ struct CodeBlockView: View {
             .frame(height: 50)
             .background(
                 Rectangle()
-                    .foregroundStyle(Color(hex: 0x191919).opacity(0.6))
+                    .foregroundStyle(Color.neutral)
+                    .opacity(0.6)
             )
             Text("Image(systemName: “globe”)")
                 .font(.custom("Menlo-Regular", size: 20))
