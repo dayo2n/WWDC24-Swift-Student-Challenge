@@ -215,7 +215,7 @@ struct Frame1View: View {
     
     private func showingNextCutAfter4Seconds() {
         if showingCut == 5 { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             withAnimation(.easeIn) {
                 self.showingCut += 1
             }   
