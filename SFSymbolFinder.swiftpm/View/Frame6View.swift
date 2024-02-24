@@ -28,9 +28,6 @@ struct Frame6View: View {
     var body: some View {
         ZStack {
             VStack {
-                Button("") {
-                    undoManager?.undo()
-                }.keyboardShortcut("z", modifiers: .command)
                 HStack {
                     Text("So, I made this with CreatML in the hope that I can solve these problems and they could focus more on their work.")
                         .font(.title)
@@ -54,9 +51,36 @@ struct Frame6View: View {
                     ZStack {
                         canvasView
                         HStack {
+                            if let undoManager = undoManager {
+                                VStack {
+                                    HStack(spacing: 20) {
+                                        Button {
+                                            undoManager.undo()
+                                        } label: {
+                                            Image(systemName: "arrow.uturn.backward")
+                                                .font(.title2)
+                                                .bold()
+                                        }
+                                        .keyboardShortcut("z", modifiers: .command)
+                                        .buttonStyle(BorderedButtonStyle())
+                                        Button {
+                                            undoManager.redo()
+                                        } label: {
+                                            Image(systemName: "arrow.uturn.forward")
+                                                .font(.title2)
+                                                .bold()
+                                        }
+                                        .keyboardShortcut("z", modifiers: [.command, .shift])
+                                        .buttonStyle(BorderedButtonStyle())
+                                    }
+                                    Spacer()
+                                }
+                                .padding()
+                            }
                             Spacer()
                             VStack {
                                 Spacer()
+                                .padding()
                                 Button("CLEAR") {
                                     isClear.toggle()
                                 }
