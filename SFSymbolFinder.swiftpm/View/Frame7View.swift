@@ -23,7 +23,7 @@ struct Frame7View: View {
                         }
                 }
             }
-            .padding(.top, 160)
+            .padding(.top, 120)
             VStack {
                 Spacer()
                 ButtonView(selectedPageTag: $selectedPageTag)
