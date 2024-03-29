@@ -39,3 +39,7 @@ https://youtu.be/6gijrcWTkss
 
 https://github.com/dayo2n/WWDC24-Swift-Student-Challenge/assets/57654681/df3acc2f-b46f-48ab-86a7-70a1ef1ca593
 
+## App Store
+### Download on the [App Store](apps.apple.com/app/id6479301549)!
+
+Continuing to develop [here](https://github.com/dayo2n/SF-Symbol-Finder)
