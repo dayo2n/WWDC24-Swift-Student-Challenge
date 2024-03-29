@@ -28,7 +28,8 @@ SF Symbols는 애플이 창작한 심볼 이미지로, 앱 내에 아이콘처�
 이런 검색의 어려움과 아이콘의 이름을 쓸 때마다 기억해야하는 어려움이 완화되었으면 좋겠다는 마음에 개발했습니다. </br>
 SF Symbols Finder, 앞으로 디자이너들과 개발자들이 SF Symbols를 사용하며 겪었던 언어의 장벽을 없애도록 도울게요. </br>
 
-<img width="500" alt="Screenshot 2024-03-29 at 9 54 53 AM" src="https://github.com/dayo2n/WWDC24-Swift-Student-Challenge/assets/57654681/8f0fc418-9f27-4e21-9932-ccea5ec158ec"><img width="500" alt="Screenshot 2024-03-29 at 9 55 12 AM" src="https://github.com/dayo2n/WWDC24-Swift-Student-Challenge/assets/57654681/16b3d5ad-9b78-4672-9805-2e7e2e511893">
+<img width="700" alt="Screenshot 2024-03-29 at 9 54 53 AM" src="https://github.com/dayo2n/WWDC24-Swift-Student-Challenge/assets/57654681/8f0fc418-9f27-4e21-9932-ccea5ec158ec">
+<img width="700" alt="Screenshot 2024-03-29 at 9 55 12 AM" src="https://github.com/dayo2n/WWDC24-Swift-Student-Challenge/assets/57654681/16b3d5ad-9b78-4672-9805-2e7e2e511893">
 
 
 <img width="1512" alt="Screenshot 2024-03-29 at 8 56 59 AM" src="https://github.com/dayo2n/WWDC24-Swift-Student-Challenge/assets/57654681/72facde5-3097-4f73-ba8b-7bb4746764a8">
