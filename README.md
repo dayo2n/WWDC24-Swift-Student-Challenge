@@ -1,7 +1,7 @@
 
 # SF Symbols Finder
 
-### ✨ Accepted for WWDC23 Swift Student Challenge
+### ✨ Accepted for WWDC24 Swift Student Challenge
 
 > Draw to find SF Symbols </br>
 > 그려서 찾는 SF Symbols </br>
