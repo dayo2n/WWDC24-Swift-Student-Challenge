@@ -40,7 +40,7 @@ https://youtu.be/6gijrcWTkss
 https://github.com/dayo2n/WWDC24-Swift-Student-Challenge/assets/57654681/df3acc2f-b46f-48ab-86a7-70a1ef1ca593
 
 ## App Store
-- Download on the [App Store](apps.apple.com/app/id6479301549)!
+- Download on the [App Store](https://apps.apple.com/app/sf-symbols-finder/id6479301549)!
 
   > Available on the iOS, iPadOS, macOS
 
